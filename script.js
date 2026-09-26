@@ -3,7 +3,8 @@ const milestones = [
   { year: "1814", label: "Paris", title: "A French passage", text: "The archive reports a move into France and a Paris lodge. Other source passages attach Egyptian lineage stories to this same moment.", tag: "contested transmission" },
   { year: "1838—39", label: "Reformation", title: "Memphis takes form", text: "Accounts associate a reformed Rite of Memphis with Paris and the names J. A. Marconis and E. N. Mouttet. Dates vary across the material.", tag: "reported re-founding" },
   { year: "1847—51", label: "Suppression", title: "A forced silence", text: "The periodicals describe intervention by Paris police, a resumption after revolution, and a later declaration of perpetual dormancy.", tag: "institutional account" },
-  { year: "1860s", label: "American print", title: "The argument travels", text: "American Masonic magazines framed the Rite through conflict: irregularity, commerce, secret knowledge, and the right to name a tradition.", tag: "archival viewpoint" }
+  { year: "1860s", label: "American print", title: "The argument travels", text: "American Masonic magazines framed the Rite through conflict: irregularity, commerce, secret knowledge, and the right to name a tradition.", tag: "archival viewpoint" },
+  { year: "1881", label: "Union", title: "Memphis meets Misraim", text: "Modern reference accounts commonly date a unification of Memphis and Misraim to 1881. The resulting name signals continuity for some organizations and a new layer of complexity for the archive.", tag: "modern reference account" }
 ];
 
 const degrees = [
@@ -70,4 +71,57 @@ motionToggle.addEventListener("click", () => {
   const isStill = document.body.classList.toggle("still");
   motionToggle.setAttribute("aria-pressed", String(isStill));
   motionToggle.textContent = `Stillness: ${isStill ? "on" : "off"}`;
+});
+
+const optionsPanel = document.querySelector(".options-panel");
+const optionsToggle = document.querySelector(".options-toggle");
+const optionsClose = document.querySelector(".options-close");
+const panelScrim = document.querySelector(".panel-scrim");
+
+function setPanel(open) {
+  optionsPanel.classList.toggle("open", open);
+  optionsPanel.setAttribute("aria-hidden", String(!open));
+  optionsToggle.setAttribute("aria-expanded", String(open));
+  panelScrim.hidden = !open;
+  if (open) optionsClose.focus();
+  else optionsToggle.focus();
+}
+
+optionsToggle.addEventListener("click", () => setPanel(true));
+optionsClose.addEventListener("click", () => setPanel(false));
+panelScrim.addEventListener("click", () => setPanel(false));
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && optionsPanel.classList.contains("open")) setPanel(false);
+});
+
+const themeSelect = document.querySelector("#theme-select");
+themeSelect.addEventListener("change", () => {
+  document.body.dataset.theme = themeSelect.value;
+});
+
+function bindRange(id, property, suffix) {
+  const input = document.querySelector(`#${id}`);
+  const output = document.querySelector(`output[for="${id}"]`);
+  const apply = () => {
+    document.documentElement.style.setProperty(property, id === "type-scale" ? input.value / 100 : input.value / 100);
+    output.value = `${input.value}${suffix}`;
+    output.textContent = output.value;
+  };
+  input.addEventListener("input", apply);
+  apply();
+}
+
+bindRange("type-scale", "--type-scale", "%");
+bindRange("grain-level", "--grain-opacity", "%");
+
+document.querySelector("#focus-mode").addEventListener("change", (event) => {
+  document.body.classList.toggle("focus-mode", event.target.checked);
+});
+document.querySelector("#drift-mode").addEventListener("change", (event) => {
+  document.body.classList.toggle("still", !event.target.checked);
+  motionToggle.setAttribute("aria-pressed", String(!event.target.checked));
+  motionToggle.textContent = `Stillness: ${event.target.checked ? "off" : "on"}`;
+});
+document.querySelector("#super-mode").addEventListener("change", (event) => {
+  document.body.classList.toggle("super-mode", event.target.checked);
 });
