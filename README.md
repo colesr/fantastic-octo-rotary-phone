@@ -9,3 +9,5 @@ The exhibit uses original interpretive writing based on supplied historical-peri
 Use **Exhibit controls** in the header to choose among five color fields, adjust type scale and paper grain, activate reading focus or constellation drift, and enable **Super Animation Mode**. Motion effects honor the operating system's reduced-motion preference.
 
 The added 1881 context is linked in the exhibit to a modern public reference on Memphis–Misraim; it is presented as a later reference account, not as a resolution of the periodical record.
+
+The **Architectures** section adds an animated, interactive comparison of the supplied material's 33- and 99-degree published models, plus later twentieth-century history. It intentionally summarizes organization and chronology rather than reproducing the source's degree tables or ceremonial descriptions. The pasted public-reference page included its own reliability warning, so all of these claims remain explicitly contextualized within the exhibit.

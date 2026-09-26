@@ -125,3 +125,35 @@ document.querySelector("#drift-mode").addEventListener("change", (event) => {
 document.querySelector("#super-mode").addEventListener("change", (event) => {
   document.body.classList.toggle("super-mode", event.target.checked);
 });
+
+const architectures = {
+  "thirty-three": {
+    number: "33",
+    date: "1862 / France",
+    title: "Four fields",
+    text: "A compact published structure: symbolic lodge, Egyptian colleges, academy, and sanctuary."
+  },
+  "ninety-nine": {
+    number: "99",
+    date: "1881 / Memphis–Misraïm",
+    title: "Ten fields",
+    text: "An extended published structure whose classes progress from symbolic lodge to sovereign sanctuary."
+  }
+};
+const architectureTabs = document.querySelector(".architecture-tabs");
+const architectureVisual = document.querySelector(".architecture-visual");
+
+architectureTabs.addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-architecture]");
+  if (!button) return;
+
+  const architecture = architectures[button.dataset.architecture];
+  architectureTabs.querySelectorAll("button").forEach((tab) => tab.setAttribute("aria-selected", "false"));
+  button.setAttribute("aria-selected", "true");
+  architectureVisual.dataset.architecture = button.dataset.architecture;
+  architectureVisual.classList.remove("reconfigure");
+  void architectureVisual.offsetWidth;
+  architectureVisual.classList.add("reconfigure");
+  architectureVisual.querySelector(".architecture-number").textContent = architecture.number;
+  architectureVisual.querySelector(".architecture-detail").innerHTML = `<p class="detail-date">${architecture.date}</p><h3>${architecture.title}</h3><p>${architecture.text}</p>`;
+});
