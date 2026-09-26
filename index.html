@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The Memphis Rite: an interactive digital art exhibit about a contested Masonic history.">
+    <title>The Memphis Rite</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#exhibit">Skip to exhibit</a>
+    <div class="grain" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="wordmark" href="#" aria-label="The Memphis Rite, return to start">TMR<span>°</span></a>
+      <p>an archival digital study</p>
+      <button class="motion-toggle" type="button" aria-pressed="false">Stillness: off</button>
+    </header>
+
+    <main id="exhibit">
+      <section class="hero" aria-labelledby="title">
+        <div class="hero-copy">
+          <p class="eyebrow">A field guide to a disputed inheritance</p>
+          <h1 id="title">The<br><em>Memphis</em><br>Rite</h1>
+          <p class="intro">A navigation through the long, luminous, and contradictory afterlife of Egyptian Masonry in nineteenth-century print.</p>
+          <a class="scroll-cue" href="#chronology">Enter the archive <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="sigil" aria-hidden="true">
+          <div class="sun"></div>
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+          <div class="orbit orbit-three"></div>
+          <span class="star star-one">✦</span>
+          <span class="star star-two">✦</span>
+          <span class="star star-three">✦</span>
+          <span class="sigil-label">M · C · M · V</span>
+        </div>
+        <p class="hero-note">Not an initiation. Not a lineage chart.<br>A record of what print made visible.</p>
+      </section>
+
+      <section class="prologue" aria-labelledby="prologue-title">
+        <p class="section-number">01 / Premise</p>
+        <div>
+          <h2 id="prologue-title">One name,<br>many shadows.</h2>
+          <p>The magazines assembled for this exhibit do not offer a single Rite of Memphis. They offer accusation and aspiration: a rite called Egyptian, Misraim, Memphis; a ladder of degrees variously counted; a modern invention claimed as ancient inheritance.</p>
+          <p class="annotation">Read the exhibit as an instrument for holding conflicting accounts together.</p>
+        </div>
+      </section>
+
+      <section class="chronology" id="chronology" aria-labelledby="chronology-title">
+        <div class="section-heading">
+          <p class="section-number">02 / Transmission</p>
+          <h2 id="chronology-title">A history<br>in motion.</h2>
+          <p>Choose a date to move through the archive. Each card condenses claims found in the supplied periodicals; dates and relationships remain contested.</p>
+        </div>
+        <div class="timeline-wrap">
+          <div class="timeline" role="tablist" aria-label="Chronology of reported Rite of Memphis history"></div>
+          <article class="timeline-detail" aria-live="polite">
+            <p class="detail-date">1805</p>
+            <h3>Refusal at Milan</h3>
+            <p>Period accounts place a related Misraim system in Milan after an exclusion from a Scottish Rite council. The later Memphis story is often told in its wake.</p>
+            <p class="detail-tag">reported origin</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="constellation-section" aria-labelledby="constellation-title">
+        <div class="section-heading constellation-heading">
+          <p class="section-number">03 / The ladder</p>
+          <h2 id="constellation-title">Counting<br>the invisible.</h2>
+          <p>Sources disagreed on whether the Rite held 90, 91, or 95 degrees. Instead of resolving the count, this constellation lets uncertainty remain part of the form.</p>
+        </div>
+        <div class="constellation-layout">
+          <div class="constellation" role="group" aria-label="Select a degree constellation">
+            <svg viewBox="0 0 640 520" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+              <path d="M78 420 L188 324 L260 404 L350 278 L452 330 L542 120" />
+              <path d="M188 324 L126 162 L304 104 L350 278 L542 120" />
+              <circle cx="78" cy="420" r="3" /><circle cx="188" cy="324" r="3" />
+              <circle cx="260" cy="404" r="3" /><circle cx="350" cy="278" r="3" />
+              <circle cx="452" cy="330" r="3" /><circle cx="542" cy="120" r="3" />
+              <circle cx="126" cy="162" r="3" /><circle cx="304" cy="104" r="3" />
+            </svg>
+            <div class="degree-nodes"></div>
+          </div>
+          <article class="degree-detail" aria-live="polite">
+            <p class="detail-date">THE LADDER</p>
+            <h3>Select a star.</h3>
+            <p>Titles cited in nineteenth-century print make an evocative, unstable vocabulary. The exhibit treats them as archival labels, not as instructions or claims of authority.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="friction" aria-labelledby="friction-title">
+        <div class="friction-art" aria-hidden="true">
+          <p>90<br>91<br>95</p>
+          <span>?</span>
+        </div>
+        <div class="friction-copy">
+          <p class="section-number">04 / Friction</p>
+          <h2 id="friction-title">The record<br>argues back.</h2>
+          <p>The archive is not neutral. Editors repeatedly branded the Rite irregular, commercial, or imaginary; other accounts offered ancient Egyptian and Hermetic genealogies. Neither chorus is an objective verdict. Together, they show how recognition, authority, and print shaped what could count as tradition.</p>
+          <button class="reveal-button" type="button" aria-expanded="false" aria-controls="source-note">Read the curator's note</button>
+          <div class="source-note" id="source-note" hidden>
+            <p>The supplied material includes period reports from 1860s Masonic magazines, many of them polemical. This exhibit summarizes their claims and locates their disagreement; it does not verify their assertions or reproduce ritual material.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="closing" aria-labelledby="closing-title">
+        <div class="closing-sigil" aria-hidden="true">✦</div>
+        <p class="section-number">05 / Coda</p>
+        <h2 id="closing-title">What survives<br>is the question.</h2>
+        <p>Names move. Counts change. Institutions draw their borders. The Memphis Rite remains, in these pages, less a fixed object than a bright disturbance at the edge of the archive.</p>
+        <p class="credits">The Memphis Rite · Interpretive digital exhibit<br>Built from supplied nineteenth-century Masonic periodical material</p>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
