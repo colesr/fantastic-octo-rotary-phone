@@ -21,11 +21,50 @@ const degrees = [
 const timeline = document.querySelector(".timeline");
 const detail = document.querySelector(".timeline-detail");
 const nodes = document.querySelector(".degree-nodes");
+const degreeList = document.querySelector(".degree-list");
 const degreeDetail = document.querySelector(".degree-detail");
+const motionToggle = document.querySelector(".motion-toggle");
+const driftToggle = document.querySelector("#drift-mode");
+const focusToggle = document.querySelector("#focus-mode");
+const superToggle = document.querySelector("#super-mode");
+
+function syncMotionState(animated) {
+  document.body.classList.toggle("still", !animated);
+  motionToggle.setAttribute("aria-pressed", String(!animated));
+  motionToggle.textContent = `Stillness: ${animated ? "off" : "on"}`;
+  driftToggle.checked = animated;
+}
+
+function activateTabs(buttons, nextButton) {
+  buttons.forEach((button) => {
+    button.setAttribute("aria-selected", String(button === nextButton));
+    button.tabIndex = button === nextButton ? 0 : -1;
+  });
+  nextButton.focus();
+}
+
+function bindHorizontalTabs(container) {
+  container.addEventListener("keydown", (event) => {
+    const buttons = [...container.querySelectorAll('[role="tab"]')];
+    const currentIndex = buttons.indexOf(document.activeElement);
+
+    if (currentIndex === -1) return;
+
+    let nextIndex = currentIndex;
+
+    if (event.key === "ArrowRight" || event.key === "ArrowDown") nextIndex = (currentIndex + 1) % buttons.length;
+    else if (event.key === "ArrowLeft" || event.key === "ArrowUp") nextIndex = (currentIndex - 1 + buttons.length) % buttons.length;
+    else if (event.key === "Home") nextIndex = 0;
+    else if (event.key === "End") nextIndex = buttons.length - 1;
+    else return;
+
+    event.preventDefault();
+    buttons[nextIndex].click();
+  });
+}
 
 function showMilestone(item, button) {
-  timeline.querySelectorAll("button").forEach((candidate) => candidate.setAttribute("aria-selected", "false"));
-  button.setAttribute("aria-selected", "true");
+  activateTabs([...timeline.querySelectorAll("button")], button);
   detail.innerHTML = `<p class="detail-date">${item.year}</p><h3>${item.title}</h3><p>${item.text}</p><p class="detail-tag">${item.tag}</p>`;
 }
 
@@ -33,28 +72,58 @@ milestones.forEach((item, index) => {
   const button = document.createElement("button");
   button.type = "button";
   button.role = "tab";
+  button.id = `milestone-tab-${index}`;
+  button.setAttribute("aria-controls", "timeline-detail-panel");
   button.setAttribute("aria-selected", String(index === 0));
+  button.tabIndex = index === 0 ? 0 : -1;
   button.innerHTML = `<span class="timeline-year">${item.year}</span><span class="timeline-label">${item.label}</span>`;
   button.addEventListener("click", () => showMilestone(item, button));
   timeline.append(button);
 });
+detail.id = "timeline-detail-panel";
+bindHorizontalTabs(timeline);
 
-function showDegree(item, button) {
-  nodes.querySelectorAll("button").forEach((candidate) => candidate.classList.remove("active"));
-  button.classList.add("active");
+function showDegree(item, ...buttons) {
+  [...nodes.querySelectorAll("button"), ...degreeList.querySelectorAll("button")].forEach((candidate) => {
+    candidate.classList.toggle("active", buttons.includes(candidate));
+    candidate.setAttribute("aria-pressed", String(buttons.includes(candidate)));
+  });
   degreeDetail.innerHTML = `<p class="detail-date">${item.label}° / ARCHIVAL LABEL</p><h3>${item.title}</h3><p>${item.text}</p>`;
 }
 
-degrees.forEach((item) => {
-  const button = document.createElement("button");
-  button.className = "degree-node";
-  button.type = "button";
-  button.style.left = `${item.x}%`;
-  button.style.top = `${item.y}%`;
-  button.textContent = item.label;
-  button.setAttribute("aria-label", `Degree ${item.label}: ${item.title}`);
-  button.addEventListener("click", () => showDegree(item, button));
-  nodes.append(button);
+degrees.forEach((item, index) => {
+  const nodeButton = document.createElement("button");
+  nodeButton.className = "degree-node";
+  nodeButton.type = "button";
+  nodeButton.style.left = `${item.x}%`;
+  nodeButton.style.top = `${item.y}%`;
+  nodeButton.textContent = item.label;
+  nodeButton.setAttribute("aria-label", `Degree ${item.label}: ${item.title}`);
+  nodeButton.setAttribute("aria-pressed", "false");
+
+  const listButton = document.createElement("button");
+  listButton.type = "button";
+  listButton.innerHTML = `${item.label}° <span>${item.title}</span>`;
+  listButton.setAttribute("aria-label", `Degree ${item.label}: ${item.title}`);
+  listButton.setAttribute("aria-pressed", "false");
+  const listItem = document.createElement("div");
+  listItem.role = "listitem";
+  listItem.append(listButton);
+
+  const activate = () => showDegree(item, nodeButton, listButton);
+  nodeButton.addEventListener("click", activate);
+  listButton.addEventListener("click", activate);
+
+  if (index === 0) {
+    nodeButton.classList.add("active");
+    listButton.classList.add("active");
+    nodeButton.setAttribute("aria-pressed", "true");
+    listButton.setAttribute("aria-pressed", "true");
+    degreeDetail.innerHTML = `<p class="detail-date">${item.label}° / ARCHIVAL LABEL</p><h3>${item.title}</h3><p>${item.text}</p>`;
+  }
+
+  nodes.append(nodeButton);
+  degreeList.append(listItem);
 });
 
 const revealButton = document.querySelector(".reveal-button");
@@ -66,17 +135,15 @@ revealButton.addEventListener("click", () => {
   sourceNote.hidden = isOpen;
 });
 
-const motionToggle = document.querySelector(".motion-toggle");
 motionToggle.addEventListener("click", () => {
-  const isStill = document.body.classList.toggle("still");
-  motionToggle.setAttribute("aria-pressed", String(isStill));
-  motionToggle.textContent = `Stillness: ${isStill ? "on" : "off"}`;
+  syncMotionState(document.body.classList.contains("still"));
 });
 
 const optionsPanel = document.querySelector(".options-panel");
 const optionsToggle = document.querySelector(".options-toggle");
 const optionsClose = document.querySelector(".options-close");
 const panelScrim = document.querySelector(".panel-scrim");
+const panelFocusableSelector = 'button, [href], select, input, [tabindex]:not([tabindex="-1"])';
 
 function setPanel(open) {
   optionsPanel.classList.toggle("open", open);
@@ -92,6 +159,21 @@ optionsClose.addEventListener("click", () => setPanel(false));
 panelScrim.addEventListener("click", () => setPanel(false));
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && optionsPanel.classList.contains("open")) setPanel(false);
+  if (event.key !== "Tab" || !optionsPanel.classList.contains("open")) return;
+
+  const focusable = [...optionsPanel.querySelectorAll(panelFocusableSelector)];
+  if (!focusable.length) return;
+
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
 });
 
 const themeSelect = document.querySelector("#theme-select");
@@ -114,15 +196,13 @@ function bindRange(id, property, suffix) {
 bindRange("type-scale", "--type-scale", "%");
 bindRange("grain-level", "--grain-opacity", "%");
 
-document.querySelector("#focus-mode").addEventListener("change", (event) => {
+focusToggle.addEventListener("change", (event) => {
   document.body.classList.toggle("focus-mode", event.target.checked);
 });
-document.querySelector("#drift-mode").addEventListener("change", (event) => {
-  document.body.classList.toggle("still", !event.target.checked);
-  motionToggle.setAttribute("aria-pressed", String(!event.target.checked));
-  motionToggle.textContent = `Stillness: ${event.target.checked ? "off" : "on"}`;
+driftToggle.addEventListener("change", (event) => {
+  syncMotionState(event.target.checked);
 });
-document.querySelector("#super-mode").addEventListener("change", (event) => {
+superToggle.addEventListener("change", (event) => {
   document.body.classList.toggle("super-mode", event.target.checked);
 });
 
@@ -143,17 +223,27 @@ const architectures = {
 const architectureTabs = document.querySelector(".architecture-tabs");
 const architectureVisual = document.querySelector(".architecture-visual");
 
-architectureTabs.addEventListener("click", (event) => {
-  const button = event.target.closest("button[data-architecture]");
+function showArchitecture(button) {
   if (!button) return;
 
   const architecture = architectures[button.dataset.architecture];
-  architectureTabs.querySelectorAll("button").forEach((tab) => tab.setAttribute("aria-selected", "false"));
-  button.setAttribute("aria-selected", "true");
+  activateTabs([...architectureTabs.querySelectorAll("button")], button);
   architectureVisual.dataset.architecture = button.dataset.architecture;
   architectureVisual.classList.remove("reconfigure");
   void architectureVisual.offsetWidth;
   architectureVisual.classList.add("reconfigure");
   architectureVisual.querySelector(".architecture-number").textContent = architecture.number;
   architectureVisual.querySelector(".architecture-detail").innerHTML = `<p class="detail-date">${architecture.date}</p><h3>${architecture.title}</h3><p>${architecture.text}</p>`;
+}
+
+architectureTabs.querySelectorAll("button").forEach((button, index) => {
+  button.setAttribute("aria-controls", "architecture-visual-panel");
+  button.tabIndex = index === 0 ? 0 : -1;
 });
+architectureVisual.id = "architecture-visual-panel";
+
+architectureTabs.addEventListener("click", (event) => {
+  showArchitecture(event.target.closest("button[data-architecture]"));
+});
+bindHorizontalTabs(architectureTabs);
+syncMotionState(false);

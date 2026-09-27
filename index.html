@@ -3,18 +3,18 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="The Memphis Rite: an interactive digital art exhibit about a contested Masonic history.">
+    <meta name="description" content="The Memphis Rite: a digital exhibit for the Samuel Crocker Lawrence Library about a contested Masonic history in nineteenth-century print.">
     <title>The Memphis Rite</title>
     <link rel="stylesheet" href="styles.css">
   </head>
-  <body>
+  <body class="still">
     <a class="skip-link" href="#exhibit">Skip to exhibit</a>
     <div class="grain" aria-hidden="true"></div>
     <header class="site-header">
       <a class="wordmark" href="#" aria-label="The Memphis Rite, return to start">TMR<span>°</span></a>
-      <p>an archival digital study</p>
+      <p>an archival digital study for the Samuel Crocker Lawrence Library</p>
       <div class="header-controls">
-        <button class="motion-toggle" type="button" aria-pressed="false">Stillness: off</button>
+        <button class="motion-toggle" type="button" aria-pressed="true">Stillness: on</button>
         <button class="options-toggle" type="button" aria-expanded="false" aria-controls="options-panel">Exhibit controls</button>
       </div>
     </header>
@@ -47,10 +47,10 @@
       <fieldset class="control-group">
         <legend>Display modes</legend>
         <label class="toggle-row"><span>Reading focus</span><input id="focus-mode" type="checkbox"><i aria-hidden="true"></i></label>
-        <label class="toggle-row"><span>Constellation drift</span><input id="drift-mode" type="checkbox" checked><i aria-hidden="true"></i></label>
+        <label class="toggle-row"><span>Ambient motion</span><input id="drift-mode" type="checkbox"><i aria-hidden="true"></i></label>
         <label class="toggle-row super-toggle"><span><strong>Super animation mode</strong><small>Maximum living geometry</small></span><input id="super-mode" type="checkbox"><i aria-hidden="true"></i></label>
       </fieldset>
-      <p class="control-note">Super animation mode respects your operating system’s reduced-motion setting.</p>
+      <p class="control-note">Motion is off by default for library reading. Super animation mode still respects your operating system's reduced-motion setting.</p>
     </aside>
     <div class="panel-scrim" hidden></div>
 
@@ -59,7 +59,7 @@
         <div class="hero-copy">
           <p class="eyebrow">A field guide to a disputed inheritance</p>
           <h1 id="title">The<br><em>Memphis</em><br>Rite</h1>
-          <p class="intro">A navigation through the long, luminous, and contradictory afterlife of Egyptian Masonry in nineteenth-century print.</p>
+          <p class="intro">A digital exhibit for the Samuel Crocker Lawrence Library tracing how nineteenth-century Masonic periodicals described, disputed, and reframed the Rite of Memphis.</p>
           <a class="scroll-cue" href="#chronology">Enter the archive <span aria-hidden="true">↓</span></a>
         </div>
         <div class="sigil" aria-hidden="true">
@@ -75,7 +75,42 @@
         <p class="hero-note">Not an initiation. Not a lineage chart.<br>A record of what print made visible.</p>
       </section>
 
-      <section class="prologue" aria-labelledby="prologue-title">
+      <section class="guide" aria-labelledby="guide-title">
+        <div class="guide-copy">
+          <p class="section-number">00 / Orientation</p>
+          <h2 id="guide-title">How to read<br>this exhibit.</h2>
+          <p>This exhibit presents nineteenth-century periodical claims about the Rite of Memphis as archival evidence, not as settled history or a guide to Masonic practice. Visitors will encounter competing origin stories, inconsistent degree counts, and strong editorial judgments preserved from the printed record.</p>
+          <p>Use the chronology, degree labels, and architectural comparison to move among those claims. The aim is interpretive clarity: to show how print culture shaped the meaning of the Rite rather than to resolve every dispute it contains.</p>
+        </div>
+        <div class="guide-meta">
+          <article class="about-card" aria-labelledby="about-title">
+            <p class="section-number">About this exhibit</p>
+            <h3 id="about-title">Institutional context and provenance</h3>
+            <dl class="metadata-list">
+              <div><dt>Host context</dt><dd>Prepared for access from the Samuel Crocker Lawrence Library website.</dd></div>
+              <div><dt>Source basis</dt><dd>Supplied nineteenth-century Masonic periodicals, supplemented by a later public reference for the 1881 context.</dd></div>
+              <div><dt>Method</dt><dd>Interpretive summary of conflicting printed claims, with no ritual instructions or claim of adjudicating historical truth.</dd></div>
+              <div><dt>Use</dt><dd>Designed for public reading, research orientation, and classroom or library exploration.</dd></div>
+            </dl>
+            <p class="guide-links">
+              <a href="https://massfreemasonry.org/boston-masonic-building/samuel-crocker-lawrence-library/" target="_blank" rel="noreferrer">Return to the library page <span aria-hidden="true">↗</span></a>
+            </p>
+          </article>
+          <nav class="contents-card" aria-labelledby="contents-title">
+            <p class="section-number">Contents</p>
+            <h3 id="contents-title">Navigate the exhibit</h3>
+            <a href="#prologue">Premise</a>
+            <a href="#chronology">Transmission</a>
+            <a href="#constellation">The ladder</a>
+            <a href="#architectures">Architectures</a>
+            <a href="#friction">Friction</a>
+            <a href="#afterlife">Afterimage</a>
+            <a href="#sources">Sources and method</a>
+          </nav>
+        </div>
+      </section>
+
+      <section class="prologue" id="prologue" aria-labelledby="prologue-title">
         <p class="section-number">01 / Premise</p>
         <div>
           <h2 id="prologue-title">One name,<br>many shadows.</h2>
@@ -101,7 +136,7 @@
         </div>
       </section>
 
-      <section class="constellation-section" aria-labelledby="constellation-title">
+      <section class="constellation-section" id="constellation" aria-labelledby="constellation-title">
         <div class="section-heading constellation-heading">
           <p class="section-number">03 / The ladder</p>
           <h2 id="constellation-title">Counting<br>the invisible.</h2>
@@ -125,9 +160,16 @@
             <p>Titles cited in nineteenth-century print make an evocative, unstable vocabulary. The exhibit treats them as archival labels, not as instructions or claims of authority.</p>
           </article>
         </div>
+        <div class="degree-index" aria-labelledby="degree-index-title">
+          <div>
+            <p class="section-number">Text path</p>
+            <h3 id="degree-index-title">Browse the archival labels as a list.</h3>
+          </div>
+          <div class="degree-list" role="list" aria-label="Degree labels in text form"></div>
+        </div>
       </section>
 
-      <section class="architectures" aria-labelledby="architectures-title">
+      <section class="architectures" id="architectures" aria-labelledby="architectures-title">
         <div class="architectures-copy">
           <p class="section-number">04 / Architectures</p>
           <h2 id="architectures-title">A rite can<br>change shape.</h2>
@@ -153,7 +195,7 @@
         </div>
       </section>
 
-      <section class="friction" aria-labelledby="friction-title">
+      <section class="friction" id="friction" aria-labelledby="friction-title">
         <div class="friction-art" aria-hidden="true">
           <p>90<br>91<br>95</p>
           <span>?</span>
@@ -169,7 +211,7 @@
         </div>
       </section>
 
-      <section class="afterlife" aria-labelledby="afterlife-title">
+      <section class="afterlife" id="afterlife" aria-labelledby="afterlife-title">
         <div>
           <p class="section-number">06 / Afterimage</p>
           <h2 id="afterlife-title">The name<br>recombines.</h2>
@@ -181,12 +223,28 @@
         </div>
       </section>
 
+      <section class="sources" id="sources" aria-labelledby="sources-title">
+        <div>
+          <p class="section-number">07 / Sources</p>
+          <h2 id="sources-title">Sources,<br>method, and use.</h2>
+        </div>
+        <div class="sources-copy">
+          <p>The exhibit draws primarily from supplied nineteenth-century Masonic periodicals whose reports are often argumentative, contradictory, and institutionally motivated. Their claims are presented here as part of the historical record of reception.</p>
+          <p>A later public reference on Memphis-Misraim is included only to situate the 1881 union within a broader modern account. It does not resolve the earlier periodical disputes and remains separate from the exhibit's primary archival base.</p>
+          <p>This project is interpretive rather than documentary in the narrow sense: it summarizes, compares, and contextualizes published claims without reproducing ritual material or asserting a final adjudication among them.</p>
+          <p class="source-actions">
+            <a href="https://massfreemasonry.org/boston-masonic-building/samuel-crocker-lawrence-library/" target="_blank" rel="noreferrer">Return to the Samuel Crocker Lawrence Library page <span aria-hidden="true">↗</span></a>
+            <a href="https://en.wikipedia.org/wiki/Rite_of_Memphis-Misraim" target="_blank" rel="noreferrer">View the later public reference <span aria-hidden="true">↗</span></a>
+          </p>
+        </div>
+      </section>
+
       <section class="closing" aria-labelledby="closing-title">
         <div class="closing-sigil" aria-hidden="true">✦</div>
-        <p class="section-number">07 / Coda</p>
+        <p class="section-number">08 / Coda</p>
         <h2 id="closing-title">What survives<br>is the question.</h2>
         <p>Names move. Counts change. Institutions draw their borders. The Memphis Rite remains, in these pages, less a fixed object than a bright disturbance at the edge of the archive.</p>
-        <p class="credits">The Memphis Rite · Interpretive digital exhibit<br>Built from supplied nineteenth-century Masonic periodical material</p>
+        <p class="credits">The Memphis Rite · Interpretive digital exhibit<br>Built from supplied nineteenth-century Masonic periodical material for library-linked public reading</p>
       </section>
     </main>
     <script src="script.js"></script>
